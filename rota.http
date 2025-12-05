@@ -1,0 +1,19 @@
+GET http://localhost:3000/courses
+
+###
+POST http://localhost:3000/courses
+Content-Type: application/json
+
+{
+    "name": "course1"
+}
+
+###
+PUT http://localhost:3000/courses/2
+Content-Type: application/json
+
+{
+    "name": "course3"
+}
+
+
