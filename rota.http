@@ -5,7 +5,8 @@ POST http://localhost:3000/courses
 Content-Type: application/json
 
 {
-    "name": "course1"
+    "title": "course Git",
+    "description": "description Git"
 }
 
 ###
@@ -16,4 +17,5 @@ Content-Type: application/json
     "name": "course3"
 }
 
-
+###
+GET http://localhost:3000/courses/1743467e-b7ac-4902-8050-963425e72177
