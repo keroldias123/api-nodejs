@@ -14,19 +14,22 @@ Server.get("/courses/:id",{
     }),
     response:{
       200:z.object({
-        courses:z.array(z.object({
+        course:z.object({
           id:z.uuid(),
         title:z.string(),
-        description:z.string().nullable()
-        }))
+        description:z.string().nullable(),
+        })
       }),
       404:z.null().describe("Course not Found"),
-    }
-  }
+    },
+  },
 }, async (request, reply) => {
   const courseId = request.params.id;
 
- const result = await db.select({id: courses.id, title: courses.title}).from(courses).where(eq(courses.id, courseId));
+ const result = await db.select()
+ .from(courses)
+ .where(eq(courses.id, courseId));
+ 
   if (result.length > 0) {
     return { course: result[0] };
   }

@@ -1,12 +1,21 @@
 GET http://localhost:3000/courses
 
 ###
+GET http://localhost:3000/courses?search=React
+
+###
+GET http://localhost:3000/courses?orderBy=title
+
+###
+GET http://localhost:3000/courses?orderBy=title&page=4
+
+###
 POST http://localhost:3000/courses
 Content-Type: application/json
 
 {
-    "title": "course Git",
-    "description": "description Git"
+    "title": "course C#",
+    "description": "description C#"
 }
 
 ###
