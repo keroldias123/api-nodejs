@@ -2,13 +2,28 @@ import chalk from "chalk";
 import { db } from "./client.ts"
 import { courses, enrollments, users } from "./schema.ts"
 import { faker } from "@faker-js/faker";
+import { hash } from "argon2";
 
 async function seed() {
-   
+   const passwordhash= await hash("123456")
     const insertuser= await db.insert(users).values([
-        {name:faker.person.fullName(),email:faker.internet.email()},
-         {name:faker.person.fullName(),email:faker.internet.email()},
-          {name:faker.person.fullName(),email:faker.internet.email()},
+        {
+          name:faker.person.fullName(),
+          email:faker.internet.email(),
+          password:passwordhash,
+          role:faker.helpers.arrayElement(["student","manager"])},
+         {
+          name:faker.person.fullName(),
+          email:faker.internet.email(),
+          password:passwordhash,
+          role:faker.helpers.arrayElement(["student","manager"])
+        },
+        {
+          name:faker.person.fullName(),
+          email:faker.internet.email(),
+          password:passwordhash,
+          role:faker.helpers.arrayElement(["student","manager"])
+        },
         ]).returning();
 
     const insertcourse= await db.insert(courses).values([
@@ -25,7 +40,11 @@ async function seed() {
 
 
     console.log(chalk.green("seed actualizado com sucesso ! "))
+    
 
 }
 
-seed();
+seed().then(()=>process.exit(0)).catch((error)=>{
+    console.error(error);
+    process.exit(1);
+});

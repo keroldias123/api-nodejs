@@ -4,14 +4,16 @@ import request from "supertest";
 import { faker } from "@faker-js/faker";
 import { Server } from "../app.ts";
 import { makeCourse } from "../tests/factories/make-course.ts";
-
+import { makeAutenticationUser } from "../tests/factories/make-autentication.ts";
 
 describe("GET /courses/:id", () => {
   test("should return a course by id", async () => {
     await Server.ready();
     const course= await makeCourse()
+    const {token}=await makeAutenticationUser("student")
     const response = await request(Server.server)
-      .get(`/courses/${course.id}`)
+    .get(`/courses/${course.id}`)
+    .set("Authorization",`${token}`)
       
     console.log(response.body);
     expect(response.status).toEqual(200);
@@ -28,7 +30,9 @@ describe("GET /courses/:id", () => {
 
 test("should return 404 if course not found", async () => {
   await Server.ready();
+  const {token}=await makeAutenticationUser("student")
   const response = await request(Server.server)
+    .set("Authorization",`${token}`)
     .get(`/courses/${faker.string.uuid()}`)
     .expect(404);
 });

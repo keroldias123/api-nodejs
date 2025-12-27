@@ -11,11 +11,12 @@ GET http://localhost:3000/courses?orderBy=title&page=4
 
 ###
 POST http://localhost:3000/courses
+Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiNjZmOGNkNS02MTBlLTQ3MjQtODIxMy05YzhhYWY4YmJkMDUiLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTc2Njg0ODk4NH0.ooPN98iAOvxiso5GsWlet4Bna687aMu61vXqLRtuWVU
 Content-Type: application/json
 
 {
-    "title": "course C#",
-    "description": "description C#"
+    "title": "course Node.JS",
+    "description": "description Node.JS"
 }
 
 ###
@@ -27,4 +28,14 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:3000/courses/1743467e-b7ac-4902-8050-963425e72177
+GET http://localhost:3000/courses/d61cf5a1-54b3-4f44-a520-5975e72a579e
+Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzZDI2ODZkNC05Y2YxLTRhYzMtOTBiYS04NDFlYTE2MTcwYjAiLCJyb2xlIjoic3R1ZGVudCIsImlhdCI6MTc2Njg0Njg0N30.tKFFngeibRyEptNEw-y0D3ddqhx8sUxFwjfV_4-OZfY
+
+###
+POST http://localhost:3000/session
+Content-Type: application/json
+
+{
+    "email": "Mariah_Thiel93@yahoo.com",
+    "password": "123456"
+}

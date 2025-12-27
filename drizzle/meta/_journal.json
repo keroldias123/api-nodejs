@@ -36,6 +36,13 @@
       "when": 1766424389880,
       "tag": "0004_bright_mindworm",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1766787765550,
+      "tag": "0005_marvelous_starhawk",
+      "breakpoints": true
     }
   ]
 }

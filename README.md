@@ -129,25 +129,36 @@ O diagrama abaixo ilustra o fluxo de uma requisição típica na API, desde a ch
 
 ```mermaid
 sequenceDiagram
-    participant C as Cliente (Frontend/Insomnia)
-    participant S as Servidor Fastify
-    participant V as Validação (Zod)
-    participant H as Handler/Rota
-    participant DB as Banco de Dados (Drizzle)
+    participant Client as Cliente
+    participant Server as Servidor (Fastify)
+    participant Sch as Schema (Zod)
+    participant Ctrl as Controlador/Rota
+    participant DB as Banco (Drizzle/Postgres)
 
-    Note over C, S: Exemplo: POST /courses
+    Note over Client, Server: Fluxo: POST /courses
 
-    C->>S: Envia Requisição HTTP (JSON)
-    S->>V: Valida Schema (Body/Params)
+    Client->>Server: Envia Requisição (JSON)
+
+    Note right of Server: Pipeline de Entrada
+    Server->>Sch: Valida Input (Body/Params)
 
     alt Validação Falha
-        V-->>S: Erro de Validação
-        S-->>C: Retorna 400 Bad Request
+        Sch-->>Server: Erro de Zod
+        Server-->>Client: Retorna 400 Bad Request
     else Validação OK
-        V->>H: Passa Dados Tipados
-        H->>DB: Query SQL (Insert/Select)
-        DB-->>H: Retorna Dados
-        H-->>S: Monta Resposta
-        S-->>C: Retorna 201/200 OK (JSON)
+        Sch-->>Server: Dados Tipados e Seguros
     end
+
+    Server->>Ctrl: Encaminha para a Rota
+
+    Ctrl->>DB: Query (Insert)
+    DB-->>Ctrl: Retorna Dados (Entidade)
+
+    Ctrl-->>Server: Retorna Resposta Bruta
+
+    Note right of Server: Pipeline de Saída
+    Server->>Sch: Serializa/Valida Resposta
+    Sch-->>Server: JSON Final Otimizado
+
+    Server-->>Client: Retorna 201 Created
 ```
