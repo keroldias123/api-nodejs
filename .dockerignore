@@ -1,0 +1,8 @@
+node_modules
+.git
+.env*
+coverage
+vite.config.ts
+rota.http
+README.md
+.vscode
